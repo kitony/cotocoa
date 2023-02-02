@@ -1,0 +1,58 @@
+
+%NQSV(INFO): ------- Output from job:0000 -------
+my processor is vec0201, ve id 0, my rank is 2
+new test:requester: my rank is 2
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 2, used time is 0.241682
+my processor is vec0201, ve id 0, my rank is 4
+new test:requester: my rank is 4
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 4, used time is 0.241674
+my processor is vec0201, ve id 0, my rank is 0
+new test:requester: my rank is 0
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 0, used time is 0.241570
+my processor is vec0201, ve id 0, my rank is 3
+new test:requester: my rank is 3
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 3, used time is 0.241699
+my processor is vec0201, ve id 0, my rank is 1
+new test:requester: my rank is 1
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 1, used time is 0.241693
+
+%NQSV(INFO): ------- Output from job:0001 -------
+my processor is vec0116, ve id 0, my rank is 7
+new test:requester: my rank is 7
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 7, used time is 0.241701
+my processor is vec0116, ve id 0, my rank is 5
+new test:requester: my rank is 5
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 5, used time is 0.241691
+my processor is vec0116, ve id 0, my rank is 8
+new test:requester: my rank is 8
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 8, used time is 0.241710
+my processor is vec0116, ve id 0, my rank is 6
+new test:requester: my rank is 6
+buffersize is 119
+bufferFFFFFF:1071000000
+signal 1
+my_rank is 6, used time is 0.241696

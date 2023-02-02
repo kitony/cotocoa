@@ -1,0 +1,25 @@
+Loading compiler version 2021.4.0
+Loading tbb version 2021.4.0
+Loading compiler-rt version 2021.4.0
+Loading debugger version 10.2.4
+Loading dpl version 2021.5.0
+Loading mpi version 2021.4.0
+Loading advisor version 2021.4.0
+Loading clck version 2021.4.0
+Loading dal version 2021.4.0
+Loading inspector version 2021.4.0
+Loading intel_ipp_intel64 version 2021.4.0
+
+For a full Intel(R) Integrated Performance Primitives functionality, you should load Intel(R) oneAPI Compiler and Intel(R) oneAPI Threading Building Blocks modules.
+
+Loading itac version 2021.4.0
+Loading mkl version 2021.4.0
+Loading vtune version 2021.7.1
+
+Loading BaseCPU/2022
+  Loading requirement: inteloneAPI/2021.4 tbb/latest compiler-rt/latest
+    debugger/latest dpl/latest compiler/latest mpi/latest advisor/latest
+    clck/latest dal/latest inspector/latest intel_ipp_intel64/latest itac/latest
+    mkl/latest vtune/latest
+Abort(0) on node 11 (rank 11 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 0) - process 11
+Abort(0) on node 12 (rank 12 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 0) - process 12

@@ -1,0 +1,29 @@
+Loading compiler version 2021.4.0
+Loading tbb version 2021.4.0
+Loading compiler-rt version 2021.4.0
+Loading debugger version 10.2.4
+Loading dpl version 2021.5.0
+Loading mpi version 2021.4.0
+Loading advisor version 2021.4.0
+Loading clck version 2021.4.0
+Loading dal version 2021.4.0
+Loading inspector version 2021.4.0
+Loading intel_ipp_intel64 version 2021.4.0
+
+For a full Intel(R) Integrated Performance Primitives functionality, you should load Intel(R) oneAPI Compiler and Intel(R) oneAPI Threading Building Blocks modules.
+
+Loading itac version 2021.4.0
+Loading mkl version 2021.4.0
+Loading vtune version 2021.7.1
+
+Loading BaseCPU/2022
+  Loading requirement: inteloneAPI/2021.4 tbb/latest compiler-rt/latest
+    debugger/latest dpl/latest compiler/latest mpi/latest advisor/latest
+    clck/latest dal/latest inspector/latest intel_ipp_intel64/latest itac/latest
+    mkl/latest vtune/latest
+Abort(537487156) on node 12 (rank 12 in comm 0): Fatal error in PMPI_Get: Invalid displacement argument in RMA call , error stack:
+PMPI_Get(162): MPI_Get(origin_addr=0x7fff40a8a6c0, origin_count=1000, MPI_INT, target_rank=3, target_disp=-2147467296, target_count=1000, MPI_INT, win=0xa0000001) failed
+PMPI_Get(105): Invalid displacement argument in RMA call 
+Abort(269051700) on node 13 (rank 13 in comm 0): Fatal error in PMPI_Get: Invalid displacement argument in RMA call , error stack:
+PMPI_Get(162): MPI_Get(origin_addr=0x7fff84782e40, origin_count=500, MPI_INT, target_rank=4, target_disp=-2147466796, target_count=500, MPI_INT, win=0xa0000001) failed
+PMPI_Get(105): Invalid displacement argument in RMA call 

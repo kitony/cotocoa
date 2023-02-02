@@ -1,0 +1,1013 @@
+start 1
+start 1
+start 1
+start 1
+my processor is cpu6510, my rank is 1
+new test:requester: my rank is 1
+my processor is cpu6510, my rank is 10
+my processor is cpu6510, my rank is 13
+new test:worker: program id is 0, my rank is 13
+my processor is cpu6510, my rank is 0
+new test:requester: my rank is 0
+my processor is cpu6510, my rank is 2
+new test:requester: my rank is 2
+my processor is cpu6510, my rank is 3
+new test:requester: my rank is 3
+my processor is cpu6510, my rank is 4
+new test:requester: my rank is 4
+my processor is cpu6510, my rank is 5
+new test:requester: my rank is 5
+my processor is cpu6510, my rank is 6
+new test:requester: my rank is 6
+my processor is cpu6510, my rank is 7
+new test:requester: my rank is 7
+my processor is cpu6510, my rank is 8
+new test:requester: my rank is 8
+my processor is cpu6510, my rank is 11
+new test:worker: program id is 0, my rank is 11
+my processor is cpu6510, my rank is 12
+new test:worker: program id is 0, my rank is 12
+requester0:req_location_start[0] is 0, req_location_end[0] is 1000
+requester0:req_location_start[1] is 0, req_location_end[1] is 1000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester1:req_location_start[0] is 0, req_location_end[0] is 1000
+requester1:req_location_start[1] is 1000, req_location_end[1] is 2000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester2:req_location_start[0] is 0, req_location_end[0] is 1000
+requester2:req_location_start[1] is 2000, req_location_end[1] is 3000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester3:req_location_start[0] is 1000, req_location_end[0] is 2000
+requester3:req_location_start[1] is 0, req_location_end[1] is 1000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester4:req_location_start[0] is 1000, req_location_end[0] is 2000
+requester4:req_location_start[1] is 1000, req_location_end[1] is 2000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester5:req_location_start[0] is 1000, req_location_end[0] is 2000
+requester5:req_location_start[1] is 2000, req_location_end[1] is 3000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester6:req_location_start[0] is 2000, req_location_end[0] is 3000
+requester6:req_location_start[1] is 0, req_location_end[1] is 1000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester7:req_location_start[0] is 2000, req_location_end[0] is 3000
+requester7:req_location_start[1] is 1000, req_location_end[1] is 2000
+buffersize is 268
+bufferFFFFFF:1072000000
+requester8:req_location_start[0] is 2000, req_location_end[0] is 3000
+requester8:req_location_start[1] is 2000, req_location_end[1] is 3000
+buffersize is 268
+bufferFFFFFF:1072000000
+new test:worker: program id is 0, my rank is 10
+req_numwrkgrps is 1
+signal 1
+signal 1
+signal 1
+signal 1
+signal 1
+signal 1
+signal 1
+signal 1
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+signal 1
+worker0:wrk_location_start[0] is 0, wrk_location_end[0] is 1500
+worker0:wrk_location_start[1] is 0, wrk_location_end[1] is 1500
+worker0:sssdfdsthe calculated[0] is 1
+worker0:sssdfdsthe calculated[1] is 1
+worker0:sssdfdsthe calculated[2] is 0
+worker0:sssdfdsthe calculated[3] is 1
+worker0:sssdfdsthe calculated[4] is 1
+worker0:sssdfdsthe calculated[5] is 0
+worker0:sssdfdsthe calculated[6] is 0
+worker0:sssdfdsthe calculated[7] is 0
+worker0:sssdfdsthe calculated[8] is 0
+signal 2
+sss0
+worker10: the count_requester is -1, count_worker is -1
+worker1:wrk_location_start[0] is 0, wrk_location_end[0] is 1500
+worker1:wrk_location_start[1] is 1500, wrk_location_end[1] is 3000
+worker1:sssdfdsthe calculated[0] is 0
+worker1:sssdfdsthe calculated[1] is 1
+worker1:sssdfdsthe calculated[2] is 1
+worker1:sssdfdsthe calculated[3] is 0
+worker1:sssdfdsthe calculated[4] is 1
+worker1:sssdfdsthe calculated[5] is 1
+worker1:sssdfdsthe calculated[6] is 0
+worker1:sssdfdsthe calculated[7] is 0
+worker1:sssdfdsthe calculated[8] is 0
+signal 2
+worker2:wrk_location_start[0] is 1500, wrk_location_end[0] is 3000
+worker2:wrk_location_start[1] is 0, wrk_location_end[1] is 1500
+worker2:sssdfdsthe calculated[0] is 0
+worker2:sssdfdsthe calculated[1] is 0
+worker2:sssdfdsthe calculated[2] is 0
+worker2:sssdfdsthe calculated[3] is 1
+worker2:sssdfdsthe calculated[4] is 1
+worker2:sssdfdsthe calculated[5] is 0
+worker2:sssdfdsthe calculated[6] is 1
+worker2:sssdfdsthe calculated[7] is 1
+worker2:sssdfdsthe calculated[8] is 0
+signal 2
+worker3:wrk_location_start[0] is 1500, wrk_location_end[0] is 3000
+worker3:wrk_location_start[1] is 1500, wrk_location_end[1] is 3000
+worker3:sssdfdsthe calculated[0] is 0
+worker3:sssdfdsthe calculated[1] is 0
+worker3:sssdfdsthe calculated[2] is 0
+worker3:sssdfdsthe calculated[3] is 0
+worker3:sssdfdsthe calculated[4] is 1
+worker3:sssdfdsthe calculated[5] is 1
+worker3:sssdfdsthe calculated[6] is 0
+worker3:sssdfdsthe calculated[7] is 1
+worker3:sssdfdsthe calculated[8] is 1
+signal 2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+count2
+count1
+the req_count_worker[0] is -1, worker[1] is 0
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 7432 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 1 PID 7433 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 2 PID 7434 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 3 PID 7435 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 4 PID 7436 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 5 PID 7437 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 6 PID 7438 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 7 PID 7439 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 8 PID 7440 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 9 PID 7441 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 10 PID 7442 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 11 PID 7443 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 12 PID 7444 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 13 PID 7445 RUNNING AT cpu6510
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================

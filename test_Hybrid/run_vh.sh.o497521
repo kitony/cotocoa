@@ -1,0 +1,332 @@
+mpirun: MPI application was aborted
+my processor is cpu1311, VH, my rank is 2
+new test:requester: my rank is 2
+buffersize is 119
+my processor is cpu1311, VH, my rank is 1
+new test:requester: my rank is 1
+buffersize is 119
+my processor is cpu1311, VH, my rank is 8
+new test:requester: my rank is 8
+buffersize is 119
+my processor is cpu1311, VH, my rank is 4
+new test:requester: my rank is 4
+buffersize is 119
+my processor is cpu1311, VH, my rank is 7
+new test:requester: my rank is 7
+buffersize is 119
+my processor is cpu1311, VH, my rank is 3
+new test:requester: my rank is 3
+buffersize is 119
+my processor is cpu1311, VH, my rank is 5
+new test:requester: my rank is 5
+buffersize is 119
+my processor is cpu1311, VH, my rank is 11
+new test:worker: program id is 0, my rank is 11
+my rank is 11, sss1
+my rank is 11, sssspec
+my rank is 11, sss2
+my rank is 11, sss1
+my rank is 11, sssspec
+my rank is 11, sss2
+my processor is cpu1311, VH, my rank is 16
+new test:worker: program id is 1, my rank is 16
+my rank is 16, sss1
+my rank is 16, sssspec
+my rank is 16, sss2
+my rank is 16, sss1
+my rank is 16, sssspec
+my rank is 16, sss2
+my processor is cpu1311, VH, my rank is 14
+new test:worker: program id is 1, my rank is 14
+rank 14, the residue is 1
+sss2
+sss3
+rank 14, the residue is 38
+my processor is cpu1311, VH, my rank is 10
+new test:worker: program id is 0, my rank is 10
+rank 10, the residue is 0
+sss2
+sss3
+countSDF1:worker10_outside1:show recv, recv[0][0] is 0, recv[50][50] is 0, recv[149][149] is 0
+rank 10, the residue is 19
+my processor is cpu1311, VH, my rank is 17
+new test:worker: program id is 1, my rank is 17
+my rank is 17, sss1
+my rank is 17, sssspec
+my rank is 17, sss2
+my rank is 17, sss1
+my rank is 17, sssspec
+my rank is 17, sss2
+my processor is cpu1311, VH, my rank is 13
+new test:worker: program id is 0, my rank is 13
+my rank is 13, sss1
+my rank is 13, sssspec
+my rank is 13, sss2
+my rank is 13, sss1
+my rank is 13, sssspec
+my rank is 13, sss2
+my processor is cpu1311, VH, my rank is 0
+new test:requester: my rank is 0
+buffersize is 119
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+count2
+count1
+my processor is cpu1311, VH, my rank is 6
+new test:requester: my rank is 6
+buffersize is 119
+my processor is cpu1311, VH, my rank is 15
+new test:worker: program id is 1, my rank is 15
+my rank is 15, sss1
+my rank is 15, sssspec
+my rank is 15, sss2
+worker15_outside2:show recv, recv[0][0] is 1000, recv[50][50] is 2000, recv[149][149] is 1000
+worker15_outside2:show recv, recv[0][0] is 1001, recv[50][50] is 2001, recv[149][149] is 1001
+my rank is 15, sss1
+my rank is 15, sssspec
+my rank is 15, sss2
+my processor is cpu1311, VH, my rank is 12
+new test:worker: program id is 0, my rank is 12
+my rank is 12, sss1
+my rank is 12, sssspec
+my rank is 12, sss2
+my rank is 12, sss1
+my rank is 12, sssspec
+my rank is 12, sss2

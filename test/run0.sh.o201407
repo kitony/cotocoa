@@ -1,0 +1,51 @@
+
+%NQSV(INFO): ------- Output from job:0000 -------
+new test:requester: my rank is 2
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 2, used time is 0.108717
+new test:requester: my rank is 0
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 0, used time is 0.108720
+new test:requester: my rank is 4
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 4, used time is 0.108717
+new test:requester: my rank is 1
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 1, used time is 0.108717
+new test:requester: my rank is 3
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 3, used time is 0.108717
+start 1
+new test:worker: program id is 0, my rank is 10
+
+%NQSV(INFO): ------- Output from job:0001 -------
+new test:requester: my rank is 6
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 6, used time is 0.108718
+new test:requester: my rank is 8
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 8, used time is 0.108718
+new test:requester: my rank is 5
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 5, used time is 0.108716
+new test:requester: my rank is 7
+buffersize is 596
+bufferFFFFFF:1069032704
+signal 1
+requester: my rank is 7, used time is 0.108716

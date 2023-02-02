@@ -158,6 +158,1173 @@ char prof_wrk_items[PROF_WRK_ITEMNUM][PROF_TITLE_LEN] = {
     "WRK complete"
 };
 
+//-----------------developed by Jingde Zhou--------------------
+//start
+
+static MPI_Win win_data, win_count_requester, win_count_worker;
+MPI_Comm sub_comm_buffer;
+//MPI_Group world_group;
+static MPI_Datatype *subarray_type;
+static MPI_Datatype *receiver_subarray_type;
+
+static volatile int count_requester = -1;
+static volatile int count_worker = -1;
+static volatile int *req_count_worker;
+
+
+static double time0,time1,time_total;
+static int buffersize;
+static int loop_number;
+static int *datasize;
+static int dimensionsize;
+static int *location_start;
+static int *location_end;
+
+static int head_worker;
+static int head_requester;
+
+static int *dimension_max;
+
+static int *real_start;
+static int *real_end;
+
+static int *calculated;
+
+static int *array_count;
+static int *subarray_count;
+static int *subarray_coordinates;
+static int *receiver_array_count;
+static int *receiver_subarray_count;
+static int *receiver_subarray_coordinates;
+
+static void *special_buffer;
+
+static int program_number;
+static int my_programid;
+static int residue;
+static int receiver_size;
+static int buffer_method;
+
+static int min(volatile int *array, int num)
+{
+    int i, tmp;
+    tmp = array[0];
+    for (i = 1;i < num;i++)
+    {
+        if (tmp > array[i])
+        {
+            tmp = array[i];
+        }
+    }
+    return tmp;
+}
+
+static int requester_buffer_init(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp, int type)
+{
+    printf("new test:requester: my rank is %d\n", world_myrank);
+    int datasize_tmp = 1;
+    int color = 0;
+    int i;
+    //buffersize = buffersize_tmp;
+
+    MPI_Comm_split(MPI_COMM_WORLD, color, world_myrank, &sub_comm_buffer);
+
+    for (i = 0; i < dimensionsize_tmp;i++)
+    {
+        datasize_tmp = datasize_tmp * (location_end_tmp[i] - location_start_tmp[i]);
+    }
+
+    //MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+    //MPI_Group_incl();
+
+    switch (type) {
+        case DAT_INT:
+        buffersize = (int)((size_t)buffersize_tmp * 1024 * 1024 * 1024 / (sizeof(int) * (size_t)datasize_tmp));
+        //buffersize = 100;
+        printf("buffersize is %d\n", buffersize);
+        printf("bufferFFFFFF:%d\n", buffersize * datasize_tmp * sizeof(int));
+        special_buffer = (void *)malloc(datasize_tmp * buffersize * sizeof(int));
+        MPI_Win_create(special_buffer, buffersize * datasize_tmp * sizeof(int), sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_data);
+        break;
+        case DAT_REAL4:
+        buffersize = (int)((size_t)buffersize_tmp * 1024 * 1024 * 1024 / (sizeof(float) * (size_t)datasize_tmp));
+        special_buffer = (void *)malloc(datasize_tmp * buffersize * sizeof(float));
+        MPI_Win_create(special_buffer, buffersize * datasize_tmp * sizeof(float), sizeof(float), MPI_INFO_NULL, MPI_COMM_WORLD, &win_data);
+        break;
+        case DAT_REAL8:
+        buffersize = (int)((size_t)buffersize_tmp * 1024 * 1024 * 1024 / (sizeof(double) * (size_t)datasize_tmp));
+        special_buffer = (void *)malloc(datasize_tmp * buffersize * sizeof(double));
+        MPI_Win_create(special_buffer, buffersize * datasize_tmp * sizeof(double), sizeof(double), MPI_INFO_NULL, MPI_COMM_WORLD, &win_data);
+        break;
+    }
+
+    if (subrank_table[world_myrank] == 0)
+    {
+        req_count_worker = (int *)malloc(req_numwrkgrps * sizeof(int));
+        for (i = 0;i < req_numwrkgrps;i++)
+        {
+            req_count_worker[i] = -1;
+        }
+        MPI_Win_create((void *)&count_requester, sizeof(int), sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_requester);
+        MPI_Win_create((void *)req_count_worker, req_numwrkgrps * sizeof(int), sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_worker);
+    }
+    else 
+    {
+        MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_requester);
+        MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_worker);
+    }
+
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_data);
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_count_requester);
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_count_worker);
+
+    for (i = 0; i < world_nprocs; i++)
+    {
+        if (role_table[i] == ROLE_WRK && subrank_table[i] == 0)
+        {
+            break;
+        }
+    }
+    head_worker = i;
+
+    for (i = 0; i < world_nprocs; i++)
+    {
+        if (role_table[i] == ROLE_REQ && subrank_table[i] == 0)
+        {
+            break;
+        }
+    }
+    head_requester = i;
+
+    if (subrank_table[world_myrank] == 0)
+    {
+        MPI_Recv(&buffer_method, 1, MPI_INT, head_worker, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Send(&buffersize, 1, MPI_INT, head_worker, 0, MPI_COMM_WORLD);
+        MPI_Send(&dimensionsize_tmp, 1, MPI_INT, head_worker, 0, MPI_COMM_WORLD);
+    }
+    datasize = (int *)malloc(numrequesters * sizeof(int));
+    location_start = (int *)malloc(dimensionsize_tmp * sizeof(int));
+    location_end = (int *)malloc(dimensionsize_tmp * sizeof(int));
+
+    for (i = 0;i < dimensionsize_tmp;i++)
+    {
+        location_start[i] = location_start_tmp[i];
+        location_end[i] = location_end_tmp[i];
+    }
+
+    MPI_Send(location_start, dimensionsize_tmp, MPI_INT, head_worker, 1, MPI_COMM_WORLD);
+    MPI_Send(location_end, dimensionsize_tmp, MPI_INT, head_worker, 2, MPI_COMM_WORLD);
+    MPI_Allgather(&datasize_tmp, 1, MPI_INT, datasize, 1, MPI_INT, sub_comm_buffer);
+
+    if (subrank_table[world_myrank] == 0)
+    {
+        MPI_Send(datasize, numrequesters, MPI_INT, head_worker, 3, MPI_COMM_WORLD);
+    }
+    printf("signal 1\n");
+}
+
+int CTCAR_buffer_init_int(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp)
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_buffer_init_int() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    requester_buffer_init(buffersize_tmp, dimensionsize_tmp, location_start_tmp, location_end_tmp, DAT_INT);
+}
+
+int CTCAR_buffer_init_real4(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp)
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_buffer_init_real4() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    requester_buffer_init(buffersize_tmp, dimensionsize_tmp, location_start_tmp, location_end_tmp, DAT_REAL4);
+}
+
+int CTCAR_buffer_init_real8(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp)
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_buffer_init_real8() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    requester_buffer_init(buffersize_tmp, dimensionsize_tmp, location_start_tmp, location_end_tmp, DAT_REAL8);
+}
+
+static int coupler_buffer_init()
+{
+    int color = 2;
+    MPI_Comm_split(MPI_COMM_WORLD, color, world_myrank, &sub_comm_buffer);
+
+    MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_data);
+    MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_requester);
+    MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_worker);
+
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_data);
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_count_requester);
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_count_worker);
+}
+
+int CTCAC_buffer_init_int()
+{
+    if (myrole != ROLE_CPL)
+    {
+        fprintf(stderr, "%d : CTCAC_buffer_init_int() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    coupler_buffer_init();
+}
+
+int CTCAC_buffer_init_real4()
+{
+    if (myrole != ROLE_CPL)
+    {
+        fprintf(stderr, "%d : CTCAC_buffer_init_real4() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    coupler_buffer_init();
+}
+
+int CTCAC_buffer_init_real8()
+{
+    if (myrole != ROLE_CPL)
+    {
+        fprintf(stderr, "%d : CTCAC_buffer_init_real8() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    coupler_buffer_init();
+}
+
+static int worker_buffer_init(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method, int type)
+{
+    printf("new test:worker: program id is %d, my rank is %d\n", my_programid, world_myrank);
+    int i,j;
+    int color = 1;
+    residue = 0;
+    time_total = 0;
+    //buffersize = buffersize_tmp;
+    loop_number = loop_number_tmp;
+    buffer_method = method;
+    MPI_Comm_split(MPI_COMM_WORLD, color, world_myrank, &sub_comm_buffer);
+
+    MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_data);
+    if (subrank_table[world_myrank] == 0)
+    {
+        MPI_Win_create((void *)&count_requester, sizeof(int), sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_requester);
+        MPI_Win_create((void *)&count_worker, sizeof(int), sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_worker);
+    }
+    else 
+    {
+        MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_requester);
+        MPI_Win_create(NULL, 0, sizeof(int), MPI_INFO_NULL, MPI_COMM_WORLD, &win_count_worker);
+    }
+    
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_data);
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_count_requester);
+    MPI_Win_lock_all(MPI_MODE_NOCHECK,win_count_worker);
+
+    for (i = 0; i < world_nprocs; i++)
+    {
+        if (role_table[i] == ROLE_WRK)
+        {
+            if (subrank_table[i] == 0)
+            {
+                break;
+            }
+        }
+    }
+    head_worker = i;
+
+    for (i = 0; i < world_nprocs; i++)
+    {
+        if (role_table[i] == ROLE_REQ)
+        {
+            if (subrank_table[i] == 0)
+            {
+                break;
+            }
+        }
+    }
+    head_requester = i;
+
+    datasize = (int *)malloc(numrequesters * sizeof(int));
+
+    if (subrank_table[world_myrank] == 0 && my_programid == 0)
+    {
+        MPI_Send(&buffer_method, 1, MPI_INT, head_requester, 0, MPI_COMM_WORLD);
+        MPI_Recv(&buffersize, 1, MPI_INT, head_requester, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Recv(&dimensionsize, 1, MPI_INT, head_requester, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Bcast(&buffersize, 1, MPI_INT, 0, sub_comm_buffer);
+        MPI_Bcast(&dimensionsize, 1, MPI_INT, 0, sub_comm_buffer);
+        location_start = (int *)malloc(numrequesters * dimensionsize * sizeof(int));
+        location_end = (int *)malloc(numrequesters * dimensionsize * sizeof(int));
+        for (i = 0;i < numrequesters;i++)
+        {
+            MPI_Recv(location_start + i * dimensionsize, dimensionsize, MPI_INT, requesterid_table[i], 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Recv(location_end + i * dimensionsize, dimensionsize, MPI_INT, requesterid_table[i], 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+        MPI_Recv(datasize, numrequesters, MPI_INT, head_requester, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Bcast(datasize, numrequesters, MPI_INT, 0, sub_comm_buffer);
+        MPI_Bcast(location_start, dimensionsize * numrequesters, MPI_INT, 0, sub_comm_buffer);
+        MPI_Bcast(location_end, dimensionsize * numrequesters, MPI_INT, 0, sub_comm_buffer);
+    }
+    else 
+    {
+        MPI_Bcast(&buffersize, 1, MPI_INT, 0, sub_comm_buffer);
+        MPI_Bcast(&dimensionsize, 1, MPI_INT, 0, sub_comm_buffer);
+        location_start = (int *)malloc(numrequesters * dimensionsize * sizeof(int));
+        location_end = (int *)malloc(numrequesters * dimensionsize * sizeof(int));
+        MPI_Bcast(datasize, numrequesters, MPI_INT, 0, sub_comm_buffer);
+        MPI_Bcast(location_start, dimensionsize * numrequesters, MPI_INT, 0, sub_comm_buffer);
+        MPI_Bcast(location_end, dimensionsize * numrequesters, MPI_INT, 0, sub_comm_buffer);
+    }
+
+    dimension_max = (int *)malloc(dimensionsize * sizeof(int));
+    dimension_max[dimensionsize - 1] = 1;
+    receiver_size = 1;
+    for (i = 0;i < dimensionsize;i++)
+    {
+        receiver_size *= recv_location_end[i] - recv_location_start[i];
+    }
+    for (i = 1;i < dimensionsize;i++)
+    {
+        dimension_max[dimensionsize - 1 - i] = recv_location_end[dimensionsize - i] - recv_location_start[dimensionsize - i];
+    }
+    
+    real_start = (int *)malloc(dimensionsize * numrequesters * sizeof(int));
+    real_end = (int *)malloc(dimensionsize * numrequesters * sizeof(int));
+    calculated = (int *)malloc(numrequesters * sizeof(int));
+
+    for(j = 0;j < numrequesters;j++)
+    {
+        calculated[j] = 1;
+        for (i = 0;i < dimensionsize;i++)
+        {
+            if (location_end[j * dimensionsize + i] <= recv_location_start[i])
+            {
+                calculated[j]--;
+                break;
+            }
+            if (location_start[j * dimensionsize + i] >= recv_location_end[i])
+            {
+                calculated[j]--;
+                break;
+            }
+        }
+    }
+
+    for (j = 0;j < numrequesters;j++)
+    {
+        if (calculated[j] > 0)
+        {
+            for (i = 0;i < dimensionsize;i++)
+            {
+                if (location_start[j * dimensionsize + i] < recv_location_start[i])
+                {
+                    real_start[j * dimensionsize + i] = recv_location_start[i] - location_start[j * dimensionsize + i];
+                }
+                else 
+                {
+                    real_start[j * dimensionsize + i] = 0;
+                }
+                if (location_end[j * dimensionsize + i] < recv_location_end[i])
+                {
+                    real_end[j * dimensionsize + i] = location_end[j * dimensionsize + i] - location_start[j * dimensionsize + i];
+                }
+                else 
+                {
+                    real_end[j * dimensionsize + i] = recv_location_end[i] - location_start[j * dimensionsize + i];
+                }
+            }
+        }
+    }
+
+    array_count = (int *)malloc(dimensionsize * sizeof(int));
+    subarray_count = (int *)malloc(dimensionsize * sizeof(int));
+    subarray_coordinates = (int *)malloc(dimensionsize * sizeof(int));
+    subarray_type = (MPI_Datatype *)malloc(numrequesters * sizeof(MPI_Datatype));
+    receiver_array_count = (int *)malloc(dimensionsize * sizeof(int));
+    receiver_subarray_count = (int *)malloc(dimensionsize * sizeof(int));
+    receiver_subarray_coordinates = (int *)malloc(dimensionsize * sizeof(int));
+    receiver_subarray_type = (MPI_Datatype *)malloc(numrequesters * sizeof(MPI_Datatype));
+
+    for (j = 0;j < numrequesters;j++)
+    {
+        if (calculated[j] > 0)
+        {
+            for (i = 0;i < dimensionsize;i++)
+            {
+                array_count[i] = location_end[j * dimensionsize + i] - location_start[j * dimensionsize + i];
+                subarray_count[i] = real_end[j * dimensionsize + i] - real_start[j * dimensionsize + i];
+                subarray_coordinates[i] = real_start[j * dimensionsize + i];
+                receiver_array_count[i] = recv_location_end[i] - recv_location_start[i];
+                receiver_subarray_count[i] = subarray_count[i];
+                receiver_subarray_coordinates[i] = real_end[j * dimensionsize + i] + location_start[j * dimensionsize + i] - recv_location_start[i] - subarray_count[i];
+            }
+
+            switch (type) {
+                case DAT_INT:
+                MPI_Type_create_subarray(dimensionsize, array_count, subarray_count, subarray_coordinates, MPI_ORDER_C, MPI_INT, subarray_type + j);
+                MPI_Type_create_subarray(dimensionsize, receiver_array_count, receiver_subarray_count, receiver_subarray_coordinates, MPI_ORDER_C, MPI_INT, receiver_subarray_type + j);
+                break;
+                case DAT_REAL4:
+                MPI_Type_create_subarray(dimensionsize, array_count, subarray_count, subarray_coordinates, MPI_ORDER_C, MPI_FLOAT, subarray_type + j);
+                MPI_Type_create_subarray(dimensionsize, receiver_array_count, receiver_subarray_count, receiver_subarray_coordinates, MPI_ORDER_C, MPI_FLOAT, receiver_subarray_type + j);
+                break;
+                case DAT_REAL8:
+                MPI_Type_create_subarray(dimensionsize, array_count, subarray_count, subarray_coordinates, MPI_ORDER_C, MPI_DOUBLE, subarray_type + j);
+                MPI_Type_create_subarray(dimensionsize, receiver_array_count, receiver_subarray_count, receiver_subarray_coordinates, MPI_ORDER_C, MPI_DOUBLE, receiver_subarray_type + j);
+                break;
+            }
+            MPI_Type_commit(subarray_type + j);
+            MPI_Type_commit(receiver_subarray_type + j);
+        }
+    }
+    printf("signal 2\n");
+}
+
+int CTCAW_buffer_init_int(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method)
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_init_int() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    worker_buffer_init(loop_number_tmp, recv_location_start, recv_location_end, method, DAT_INT);
+}
+
+int CTCAW_buffer_init_real4(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method)
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_init_real4() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    worker_buffer_init(loop_number_tmp, recv_location_start, recv_location_end, method, DAT_REAL4);
+}
+
+int CTCAW_buffer_init_real8(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method)
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_init_real8() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    worker_buffer_init(loop_number_tmp, recv_location_start, recv_location_end, method, DAT_REAL8);
+}
+
+int requester_buffer_load_data_nosuspend(void *loaded_data, int type)
+{
+    count_requester++;
+    int tmp;
+    int i, j;
+    int mod_number;
+
+    mod_number = (count_requester) % buffersize;
+    //if the data in buffer is full, then requester should wait for worker
+    //copy data to the exact location in buffer
+    switch (type) {
+        case DAT_INT:
+        memcpy((int *)special_buffer + datasize[subrank_table[world_myrank]] * mod_number, (int *)loaded_data, datasize[subrank_table[world_myrank]] * sizeof(int));
+        break;
+        case DAT_REAL4:
+        memcpy((float *)special_buffer + datasize[subrank_table[world_myrank]] * mod_number, (float *)loaded_data, datasize[subrank_table[world_myrank]] * sizeof(float));
+        break;
+        case DAT_REAL8:
+        memcpy((double *)special_buffer + datasize[subrank_table[world_myrank]] * mod_number, (double *)loaded_data, datasize[subrank_table[world_myrank]] * sizeof(double));
+        break;
+    }
+
+    MPI_Barrier(sub_comm_buffer);
+    if (subrank_table[world_myrank] == 0)
+    {
+        for (i = 0;i < req_numwrkgrps;i++)
+        {
+            MPI_Put((void *)&count_requester, 1, MPI_INT, req_wrkmaster_table[i], 0, 1, MPI_INT, win_count_requester);
+        }
+    }
+    //MPI_Barrier(sub_comm_buffer);
+}
+
+
+static int requester_buffer_load_data(void *loaded_data, int type)
+{
+    /*
+    if (subrank_table[world_myrank] == 0)
+    {
+        //printf("count1\n");
+        count_requester++;
+    }
+    */
+    
+    count_requester++;
+    int tmp;
+    int i, j;
+    int mod_number;
+    volatile int min_count_worker;
+    int tmp_count = 0;
+
+    //MPI_Barrier(sub_comm_buffer);
+    mod_number = count_requester % buffersize;
+    //if the data in buffer is full, then requester should wait for worker
+    if (subrank_table[world_myrank] == 0)
+    {
+        printf("count1\n");
+        printf("the req_count_worker[0] is %d, worker[1] is %d\n", req_count_worker[0], req_count_worker[1]);
+        
+        min_count_worker = min(req_count_worker, req_numwrkgrps);
+        //printf("min_count_worker is %d\n", min_count_worker);
+        while (count_requester > min_count_worker + buffersize)
+        {
+            //very important point1
+            MPI_Win_flush_all(win_count_worker);
+            /*
+            if (tmp_count < 30)
+            {
+                printf("show the min_count_worker:%d\n", min_count_worker);
+                tmp_count++;
+            }
+            */
+            //MPI_Win_flush_all(win_data);
+            min_count_worker = min(req_count_worker, req_numwrkgrps);
+        }
+        printf("count2\n");
+        
+    }
+    //MPI_Bcast((void *)req_count_worker, req_numwrkgrps, MPI_INT, 0, sub_comm_buffer);
+    MPI_Barrier(sub_comm_buffer);
+    //copy data to the exact location in buffer
+    switch (type) {
+        case DAT_INT:
+        memcpy((int *)special_buffer + datasize[subrank_table[world_myrank]] * mod_number, (int *)loaded_data, datasize[subrank_table[world_myrank]] * sizeof(int));
+        break;
+        case DAT_REAL4:
+        memcpy((float *)special_buffer + datasize[subrank_table[world_myrank]] * mod_number, (float *)loaded_data, datasize[subrank_table[world_myrank]] * sizeof(float));
+        break;
+        case DAT_REAL8:
+        memcpy((double *)special_buffer + datasize[subrank_table[world_myrank]] * mod_number, (double *)loaded_data, datasize[subrank_table[world_myrank]] * sizeof(double));
+        break;
+    }
+
+    if (subrank_table[world_myrank] == 0)
+    {
+        for (i = 0;i < req_numwrkgrps;i++)
+        {
+            MPI_Put((void *)&count_requester, 1, MPI_INT, req_wrkmaster_table[i], 0, 1, MPI_INT, win_count_requester);
+        }
+        //printf("count2\n");
+    }
+}
+
+int CTCAR_buffer_load_data_int(int *loaded_data)
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_load_data_int() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (buffer_method == 1)
+    {
+        requester_buffer_load_data((void *)loaded_data, DAT_INT);
+    }
+    else 
+    {
+        requester_buffer_load_data_nosuspend((void *)loaded_data, DAT_INT);
+    }
+}
+
+int CTCAR_buffer_load_data_real4(float *loaded_data)
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_load_data_real4() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (buffer_method == 1)
+    {
+        requester_buffer_load_data((void *)loaded_data, DAT_REAL4);
+    }
+    else 
+    {
+        requester_buffer_load_data_nosuspend((void *)loaded_data, DAT_REAL4);
+    }
+}
+
+int CTCAR_buffer_load_data_real8(double *loaded_data)
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_load_data_real8() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (buffer_method == 1)
+    {
+        requester_buffer_load_data((void *)loaded_data, DAT_REAL8);
+    }
+    else 
+    {
+        requester_buffer_load_data_nosuspend((void *)loaded_data, DAT_REAL8);
+    }
+}
+
+static int get_address_flag;
+static int tmp_get_address;
+static int count_overwrite;
+static int current_timestep;
+
+int CTCAW_buffer_get_timestep()
+{
+    return current_timestep + tmp_get_address - residue + 1;
+}
+
+int CTCAW_buffer_get_overwriting_flag()
+{
+    if (count_overwrite > 0)
+    {
+        count_overwrite--;
+        return 1;
+    }
+    return 0;
+}
+
+int* CTCAW_buffer_get_address(int *receiver_address)
+{
+    if (get_address_flag == 1)
+    {
+        tmp_get_address = residue;
+        get_address_flag = 0;
+    }
+    //printf("the receiver_size is %d\n", receiver_size);
+    return receiver_address + (tmp_get_address - residue) * receiver_size;
+}
+
+int worker_buffer_read_data_nosuspend(int *receiver_address, int type)
+{
+    if (residue > 0)
+    {
+        residue--;
+        return 1;
+    }
+    if (count_worker >= loop_number - 1)
+    {
+        return 2;
+    }
+    int i, j;
+    int mod_number;
+    int tmp_count = 0;
+    int tmp_count_requester;
+    int mod_bound;
+    int mod_flag;
+    int typesize;
+    switch (type)
+    {
+    case DAT_INT:
+        typesize = sizeof(int);
+        break;
+    
+    case DAT_REAL4:
+        typesize = sizeof(float);
+        break;
+
+    case DAT_REAL8:
+        typesize = sizeof(double);
+        break;
+
+    default:
+        break;
+    }
+
+    if (subrank_table[world_myrank] == 0)
+    {
+        //very important point2
+        
+        while (count_requester <= count_worker)
+        {
+            MPI_Win_flush(head_requester, win_count_requester);
+        }
+        
+
+        tmp_count_requester = count_requester;
+        MPI_Bcast((void *)&tmp_count_requester, 1, MPI_INT, 0, CTCA_subcomm);
+        if (tmp_count_requester > count_worker + buffersize)
+        {
+            count_worker = tmp_count_requester - buffersize;
+        }
+        MPI_Bcast((void *)&count_worker, 1, MPI_INT, 0, CTCA_subcomm);
+        //printf("my_rank is %d, count_requester is %d, count_worker is %d\n", world_myrank, tmp_count_requester, count_worker);
+        get_address_flag = 1;
+        mod_flag = 0;
+        residue = tmp_count_requester - count_worker - 1;
+        mod_number = (count_worker + 1) % buffersize;
+        mod_bound = buffersize;
+        while (mod_bound <= tmp_count_requester)
+        {
+            if (mod_bound > count_worker + 1)
+            {
+                mod_flag = 1;
+                break;
+            }
+            mod_bound += buffersize;
+        }
+        printf("my_rank is %d, the residue is %d\n", world_myrank, residue);
+        time0 = MPI_Wtime();
+
+        if (mod_flag == 0)
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, tmp_count_requester - count_worker, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], tmp_count_requester - count_worker, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        else 
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, mod_bound - count_worker - 1, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], mod_bound - count_worker - 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address + typesize * receiver_size * (mod_bound - count_worker - 1), tmp_count_requester - mod_bound + 1, receiver_subarray_type[j], requesterid_table[j], 0, tmp_count_requester - mod_bound + 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        //MPI_Win_flush_all(win_data);
+        time1 = MPI_Wtime();
+        time_total += time1 - time0;
+        if (count_requester > count_worker + buffersize)
+        {
+            count_overwrite = count_requester - count_worker - buffersize;
+        }
+        else
+        {
+            count_overwrite = 0;
+        }
+        MPI_Bcast(&count_overwrite, 1, MPI_INT, 0, CTCA_subcomm);
+        current_timestep = count_worker;
+        count_worker = tmp_count_requester;
+        //this MPI_Barrier() must to be called, if rank 0's MPI_Win_flush_all() is finished before other rank's MPI_Get()  
+        //and go to the next loop first, then there may be error 
+        MPI_Put((void *)&count_worker, 1, MPI_INT, head_requester, my_programid, 1, MPI_INT, win_count_worker);
+        return 1;
+    }
+    else 
+    {
+        MPI_Bcast((void *)&count_requester, 1, MPI_INT, 0, CTCA_subcomm);
+        MPI_Bcast((void *)&count_worker, 1, MPI_INT, 0, CTCA_subcomm);
+        residue = count_requester - count_worker - 1;
+        get_address_flag = 1;
+    
+        mod_flag = 0;
+        mod_number = (count_worker + 1) % buffersize;
+        mod_bound = buffersize;
+        while (mod_bound <= count_requester)
+        {
+            if (mod_bound > count_worker + 1)
+            {
+                mod_flag = 1;
+                break;
+            }
+            mod_bound += buffersize;
+        }
+
+        if (mod_flag == 0)
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, count_requester - count_worker, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], count_requester - count_worker, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        else 
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, mod_bound - count_worker - 1, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], mod_bound - count_worker - 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address + typesize * receiver_size * (mod_bound - count_worker - 1), count_requester - mod_bound + 1, receiver_subarray_type[j], requesterid_table[j], 0, count_requester - mod_bound + 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        //MPI_Win_flush_all(win_data);
+        //must call
+        MPI_Bcast(&count_overwrite, 1, MPI_INT, 0, CTCA_subcomm);
+        current_timestep = count_worker;
+        count_worker = count_requester;
+        return 1;
+    }
+}
+
+static int worker_buffer_read_data_suspend(void *receiver_address, int type)
+{
+    if (residue > 0)
+    {
+        residue--;
+        return 1;
+    }
+    if (count_worker >= loop_number - 1)
+    {
+        return 2;
+    }
+    int i, j;
+    int mod_number;
+    int tmp_count = 0;
+    int tmp_count_requester;
+    int mod_flag;
+    int mod_bound;
+    int typesize;
+    switch (type)
+    {
+    case DAT_INT:
+        typesize = sizeof(int);
+        break;
+    
+    case DAT_REAL4:
+        typesize = sizeof(float);
+        break;
+
+    case DAT_REAL8:
+        typesize = sizeof(double);
+        break;
+
+    default:
+        break;
+    }
+
+    if (subrank_table[world_myrank] == 0)
+    {
+        //printf("sss0\n");
+        //very important point2
+        //printf("my rank is %d, worker: the count_requester is %d\n", world_myrank, count_requester);
+        while (count_requester <= count_worker)
+        {
+            MPI_Win_flush(head_requester, win_count_requester);
+        }
+        //printf("sss2\n");
+
+        tmp_count_requester = count_requester;
+
+        get_address_flag = 1;
+        mod_flag = 0;
+        residue = tmp_count_requester - count_worker - 1;
+        mod_number = (count_worker + 1) % buffersize;
+        printf("rank %d, the residue is %d\n", world_myrank, residue);
+        //printf("rank %d, the tmp_count_requester is %d\n", world_myrank, tmp_count_requester);
+        MPI_Bcast(&tmp_count_requester, 1, MPI_INT, 0, CTCA_subcomm);
+        mod_bound = buffersize;
+        while (mod_bound <= tmp_count_requester)
+        {
+            if (mod_bound > count_worker + 1)
+            {
+                mod_flag = 1;
+                break;
+            }
+            mod_bound += buffersize;
+        }
+        printf("gooooood3\n");
+        time0 = MPI_Wtime();
+        //printf("sss1\n");
+        if (mod_flag == 0)
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, tmp_count_requester - count_worker, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], tmp_count_requester - count_worker, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        
+        else 
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, mod_bound - count_worker - 1, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], mod_bound - count_worker - 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address + typesize * receiver_size * (mod_bound - count_worker - 1), tmp_count_requester - mod_bound + 1, receiver_subarray_type[j], requesterid_table[j], 0, tmp_count_requester - mod_bound + 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        
+        printf("gooooood4\n");
+        count_worker = tmp_count_requester;
+        /*
+        while (count_worker < tmp_count_requester)
+        {
+            count_worker++;
+            mod_number = count_worker % buffersize;
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address + tmp_count * receiver_size, 1, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], 1, subarray_type[j], win_data);
+                }
+            }
+            tmp_count++;
+        }
+        */
+        //MPI_Win_flush_all(win_data);
+        printf("gooooood5\n");
+        time1 = MPI_Wtime();
+        time_total += time1 - time0;
+        //this MPI_Barrier() must to be called, if rank 0's MPI_Win_flush_all() is finished before other rank's MPI_Get()  
+        //and go to the next loop first, then there may be error 
+        //printf("sss2\n");
+        MPI_Barrier(CTCA_subcomm);
+        printf("gooooood6\n");
+        //printf("sss3\n");
+        MPI_Put((void *)&count_worker, 1, MPI_INT, head_requester, my_programid, 1, MPI_INT, win_count_worker);
+        //printf("sss4\n");
+        //printf("my rank is %d, my count_worker is %d\n", world_myrank, count_worker);
+        //printf("sss5\n");
+        return 1;
+    }
+    else 
+    {
+        //printf("sss0\n");
+        MPI_Bcast((void *)&count_requester, 1, MPI_INT, 0, CTCA_subcomm);
+        tmp_count_requester = count_requester;
+        residue = tmp_count_requester - count_worker - 1;
+        get_address_flag = 1;
+        mod_flag = 0;
+        mod_number = (count_worker + 1) % buffersize;
+        printf("my rank is %d, sss1\n",world_myrank);
+        mod_bound = buffersize;
+        while (mod_bound <= tmp_count_requester)
+        {
+            if (mod_bound > count_worker + 1)
+            {
+                mod_flag = 1;
+                break;
+            }
+            mod_bound += buffersize;
+        }
+
+        if (mod_flag == 0)
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, tmp_count_requester - count_worker, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], tmp_count_requester - count_worker, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                    printf("qwerty signal: j is %d\n", j);
+                }
+            }
+        }
+        
+        else 
+        {
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address, mod_bound - count_worker - 1, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], mod_bound - count_worker - 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address + typesize * receiver_size * (mod_bound - count_worker - 1), tmp_count_requester - mod_bound + 1, receiver_subarray_type[j], requesterid_table[j], 0, tmp_count_requester - mod_bound + 1, subarray_type[j], win_data);
+                    MPI_Win_flush_all(win_data);
+                }
+            }
+        }
+        
+
+
+        //printf("rank %d, the count_requester is %d\n", world_myrank, count_requester);
+        /*
+        for (j = 0;j < numrequesters;j++)
+        {
+            if (calculated[j] == 1)
+            {
+                MPI_Get(receiver_address, count_requester - count_worker, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], count_requester - count_worker, subarray_type[j], win_data);
+            }
+        }
+        */
+        count_worker = tmp_count_requester;
+        /*
+        while (count_worker < count_requester)
+        {
+            count_worker++;
+            mod_number = count_worker % buffersize;
+            for (j = 0;j < numrequesters;j++)
+            {
+                if (calculated[j] == 1)
+                {
+                    MPI_Get(receiver_address + tmp_count * receiver_size, 1, receiver_subarray_type[j], requesterid_table[j], mod_number * datasize[j], 1, subarray_type[j], win_data);
+                }
+            }
+            tmp_count++;
+        }
+        */
+        printf("my rank is %d, sssspec\n",world_myrank);
+        /*
+        for (j = 0;j < numrequesters;j++)
+        {
+            if (calculated[j] == 1)
+            {
+                MPI_Win_flush(requesterid_table[j], win_data);
+            }
+        }
+        */
+        //MPI_Win_flush_all(win_data);
+        printf("my rank is %d, sss2\n",world_myrank);
+        //must call
+        MPI_Barrier(CTCA_subcomm);
+        //printf("sss3\n");
+        return 1;
+    }
+}
+
+int CTCAW_buffer_read_data_int(int *receiver_address)
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_read_data_int() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (buffer_method == 1)
+    {
+        return worker_buffer_read_data_suspend((void *)receiver_address, DAT_INT);
+    }
+    else
+    {
+        return worker_buffer_read_data_nosuspend((void *)receiver_address, DAT_INT);
+    }
+}
+
+int CTCAW_buffer_read_data_real4(float *receiver_address)
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_read_data_real4() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (buffer_method == 1)
+    {
+        return worker_buffer_read_data_suspend((void *)receiver_address, DAT_REAL4);
+    }
+    else
+    {
+        return worker_buffer_read_data_nosuspend((void *)receiver_address, DAT_REAL4);
+    }
+}
+
+int CTCAW_buffer_read_data_real8(double *receiver_address)
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_read_data_real8() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (buffer_method == 1)
+    {
+        return worker_buffer_read_data_suspend((void *)receiver_address, DAT_REAL8);
+    }
+    else
+    {
+        return worker_buffer_read_data_nosuspend((void *)receiver_address, DAT_REAL8);
+    }
+}
+
+int CTCAR_buffer_free()
+{
+    if (myrole != ROLE_REQ)
+    {
+        fprintf(stderr, "%d : CTCAR_buffer_free() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Win_unlock_all(win_data);
+    MPI_Win_unlock_all(win_count_requester);
+    MPI_Win_unlock_all(win_count_worker);
+    MPI_Win_free(&win_data);
+    MPI_Win_free(&win_count_requester);
+    MPI_Win_free(&win_count_worker);
+}
+
+int CTCAC_buffer_free()
+{
+    if (myrole != ROLE_CPL)
+    {
+        fprintf(stderr, "%d : CTCAC_buffer_free() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Win_unlock_all(win_data);
+    MPI_Win_unlock_all(win_count_requester);
+    MPI_Win_unlock_all(win_count_worker);
+    MPI_Win_free(&win_data);
+    MPI_Win_free(&win_count_requester);
+    MPI_Win_free(&win_count_worker);
+}
+
+int CTCAW_buffer_free()
+{
+    if (myrole != ROLE_WRK)
+    {
+        fprintf(stderr, "%d : CTCAW_buffer_free() : ERROR : wrong role %d\n", world_myrank, myrole);
+        return 0;
+    }
+    if (subrank_table[world_myrank] == 0)
+    {
+        printf("my rank is %d, time is %f\n", world_myrank, time_total);
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Win_unlock_all(win_data);
+    MPI_Win_unlock_all(win_count_requester);
+    MPI_Win_unlock_all(win_count_worker);
+    MPI_Win_free(&win_data);
+    MPI_Win_free(&win_count_requester);
+    MPI_Win_free(&win_count_worker);
+}
+
+//-----------------developed by Jingde Zhou--------------------
+//end
+
+
 static int startprof()
 {
     int ret;
@@ -1058,6 +2225,7 @@ int CTCAC_init_detail(int numareas, int numreqs, int intparams, size_t bufslotsz
     //  setup a queue for outgoing requests
     cplwrk_req_itemsize = CPLWRK_REQ_SIZE + maxintparams * sizeof(int);
     cpl_reqq = (size_t *)malloc(cplwrk_req_itemsize * (cpl_maxreqs + 1));
+    #pragma _NEC novector
     for (i = 0; i < cpl_maxreqs + 1; i++) {
         CPLWRK_REQ_FROMRANK((char *)cpl_reqq + i * cplwrk_req_itemsize) = -1;
         CPLWRK_REQ_PROGID((char *)cpl_reqq + i * cplwrk_req_itemsize) = -1;
@@ -1109,6 +2277,9 @@ int CTCAC_init_detail(int numareas, int numreqs, int intparams, size_t bufslotsz
         if (p >= 0) 
             cpl_numprogids = insert_progid(uniq_progid_table, world_nprocs, p, cpl_numprogids);
     }
+
+    //add by Jingde Zhou
+    program_number = cpl_numprogids;
 
     progid_table = (int *)malloc(cpl_numprogids * sizeof(int));
     for (i = 0; i < cpl_numprogids; i++)
@@ -1984,6 +3155,7 @@ int CTCAW_init_detail(int progid, int procspercomm, int numareas, int intparams)
     int *rank_progid_table, *rank_procspercomm_table, *rank_wrkcomm_table;
     MPI_Aint size_byte;
 
+    my_programid = progid;
     myrole = ROLE_WRK;
     maxareas = numareas;
     maxintparams = intparams;

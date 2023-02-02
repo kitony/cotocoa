@@ -1,6 +1,6 @@
-PREFIX=/usr/local/cotocoa
-CC=mpicc
-FC=mpifort
+PREFIX=~/cotocoa
+CC=mpincc
+FC=mpinfort
 CFLAGS=-I.
 LDFLAGS=-L.
 LIBS=-lctca

@@ -78,3 +78,25 @@ extern int CTCAW_prof_start();
 extern int CTCAW_prof_stop();
 extern int CTCAW_prof_start_calc();
 extern int CTCAW_prof_stop_calc();
+
+
+
+//-----------------developed by Jingde Zhou--------------------
+extern int CTCAR_buffer_init_int(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp);
+extern int CTCAR_buffer_init_real4(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp);
+extern int CTCAR_buffer_init_real8(int buffersize_tmp, int dimensionsize_tmp, int *location_start_tmp, int *location_end_tmp);
+extern int CTCAC_buffer_init();
+extern int CTCAW_buffer_init_int(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method);
+extern int CTCAW_buffer_init_real4(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method);
+extern int CTCAW_buffer_init_real8(int loop_number_tmp, int *recv_location_start, int *recv_location_end, int method);
+
+extern int CTCAR_buffer_load_data(void *loaded_data);
+extern int CTCAW_buffer_read_data(void *receiver_buffer);
+
+extern int CTCAR_buffer_free();
+extern int CTCAC_buffer_free();
+extern int CTCAW_buffer_free();
+
+extern int CTCAW_buffer_get_timestep();
+extern int CTCAW_buffer_get_overwriting_flag();
+extern int* CTCAW_buffer_get_address(void *receiver_address);

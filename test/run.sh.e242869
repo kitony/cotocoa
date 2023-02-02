@@ -1,0 +1,12 @@
+
+%NQSV(INFO): ------- Output from job:0000 -------
+Loading BaseVEC/2022
+  Loading requirement: necsdk/3.4.2 necmpi/2.21.0
+vec0203: mpid(0): process_comm abort; connection down to socket s=57
+
+MPI process (universe 0, rank 9) terminated by signal(7); Bus error (dumped to core.3432582)
+MPI process (universe = 0, rank = 9) terminated by signal(7)
+vec0203: mpid(0): Program terminated unexpectedly
+
+%NQSV(INFO): ------- Output from job:0001 -------
+vec0105: mpid(1): MPI execution terminated abnormally on remote node

@@ -1,0 +1,161 @@
+
+%NQSV(INFO): ------- Output from job:0000 -------
+important signal sss
+my processor is cpu1401, VH, my rank is 7
+new test:requester: my rank is 7
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 4
+new test:requester: my rank is 4
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 6
+new test:requester: my rank is 6
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 5
+new test:requester: my rank is 5
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 2
+new test:requester: my rank is 2
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 1
+new test:requester: my rank is 1
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 3
+new test:requester: my rank is 3
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 0
+new test:requester: my rank is 0
+buffersize is 119
+important signal sss
+my processor is cpu1401, VH, my rank is 8
+new test:requester: my rank is 8
+buffersize is 119
+mpirun: MPI application was aborted
+
+%NQSV(INFO): ------- Output from job:0001 -------
+my processor is vec0101, VH, my rank is 11
+new test:worker: program id is 0, my rank is 11
+timestep is 0, flag is 0, countSDF1:worker11_outside1:show recv, recv[0][0] is 1000, recv[50][50] is 2000, recv[149][149] is 1000
+timestep is 1, flag is 0, countSDF2:worker11_outside1:show recv, recv[0][0] is 1001, recv[50][50] is 2001, recv[149][149] is 1001
+timestep is 2, flag is 0, countSDF3:worker11_outside1:show recv, recv[0][0] is 1002, recv[50][50] is 2002, recv[149][149] is 1002
+timestep is 3, flag is 0, countSDF4:worker11_outside1:show recv, recv[0][0] is 1003, recv[50][50] is 2003, recv[149][149] is 1003
+timestep is 4, flag is 0, countSDF5:worker11_outside1:show recv, recv[0][0] is 1004, recv[50][50] is 2004, recv[149][149] is 1004
+timestep is 5, flag is 0, countSDF6:worker11_outside1:show recv, recv[0][0] is 1005, recv[50][50] is 2005, recv[149][149] is 1005
+timestep is 6, flag is 0, countSDF7:worker11_outside1:show recv, recv[0][0] is 1006, recv[50][50] is 2006, recv[149][149] is 1006
+timestep is 7, flag is 0, countSDF8:worker11_outside1:show recv, recv[0][0] is 1007, recv[50][50] is 2007, recv[149][149] is 1007
+timestep is 8, flag is 0, countSDF9:worker11_outside1:show recv, recv[0][0] is 1008, recv[50][50] is 2008, recv[149][149] is 1008
+timestep is 9, flag is 0, countSDF10:worker11_outside1:show recv, recv[0][0] is 1009, recv[50][50] is 2009, recv[149][149] is 1009
+timestep is 10, flag is 0, countSDF11:worker11_outside1:show recv, recv[0][0] is 1010, recv[50][50] is 2010, recv[149][149] is 1010
+timestep is 11, flag is 0, countSDF12:worker11_outside1:show recv, recv[0][0] is 1011, recv[50][50] is 2011, recv[149][149] is 1011
+timestep is 12, flag is 0, countSDF13:worker11_outside1:show recv, recv[0][0] is 1012, recv[50][50] is 2012, recv[149][149] is 1012
+timestep is 13, flag is 0, countSDF14:worker11_outside1:show recv, recv[0][0] is 1013, recv[50][50] is 2013, recv[149][149] is 1013
+timestep is 14, flag is 0, countSDF15:worker11_outside1:show recv, recv[0][0] is 1014, recv[50][50] is 2014, recv[149][149] is 1014
+timestep is 15, flag is 0, countSDF16:worker11_outside1:show recv, recv[0][0] is 1015, recv[50][50] is 2015, recv[149][149] is 1015
+timestep is 16, flag is 0, countSDF17:worker11_outside1:show recv, recv[0][0] is 1016, recv[50][50] is 2016, recv[149][149] is 1016
+timestep is 17, flag is 0, countSDF18:worker11_outside1:show recv, recv[0][0] is 1017, recv[50][50] is 2017, recv[149][149] is 1017
+timestep is 18, flag is 0, countSDF19:worker11_outside1:show recv, recv[0][0] is 1018, recv[50][50] is 2018, recv[149][149] is 1018
+timestep is 19, flag is 0, countSDF20:worker11_outside1:show recv, recv[0][0] is 1019, recv[50][50] is 2019, recv[149][149] is 1019
+timestep is 20, flag is 0, countSDF21:worker11_outside1:show recv, recv[0][0] is 1020, recv[50][50] is 2020, recv[149][149] is 1020
+timestep is 21, flag is 0, countSDF22:worker11_outside1:show recv, recv[0][0] is 1021, recv[50][50] is 2021, recv[149][149] is 1021
+timestep is 22, flag is 0, countSDF23:worker11_outside1:show recv, recv[0][0] is 1022, recv[50][50] is 2022, recv[149][149] is 1022
+timestep is 23, flag is 0, countSDF24:worker11_outside1:show recv, recv[0][0] is 1023, recv[50][50] is 2023, recv[149][149] is 1023
+timestep is 24, flag is 0, countSDF25:worker11_outside1:show recv, recv[0][0] is 1024, recv[50][50] is 2024, recv[149][149] is 1024
+timestep is 25, flag is 0, countSDF26:worker11_outside1:show recv, recv[0][0] is 1025, recv[50][50] is 2025, recv[149][149] is 1025
+timestep is 26, flag is 0, countSDF27:worker11_outside1:show recv, recv[0][0] is 1026, recv[50][50] is 2026, recv[149][149] is 1026
+timestep is 27, flag is 0, countSDF28:worker11_outside1:show recv, recv[0][0] is 1027, recv[50][50] is 2027, recv[149][149] is 1027
+timestep is 28, flag is 0, countSDF29:worker11_outside1:show recv, recv[0][0] is 1028, recv[50][50] is 2028, recv[149][149] is 1028
+timestep is 29, flag is 0, countSDF30:worker11_outside1:show recv, recv[0][0] is 1029, recv[50][50] is 2029, recv[149][149] is 1029
+timestep is 30, flag is 0, countSDF31:worker11_outside1:show recmy processor is vec0101, ve id 0, my rank is 15
+new test:worker: program id is 1, my rank is 15
+signal 2
+timestep is 0, flag is 1, worker15_outside2:show recv, recv[0][0] is 1000, recv[50][50] is 2000, recv[149][149] is 1000
+timestep is 1, flag is 1, worker15_outside2:show recv, recv[0][0] is 1001, recv[50][50] is 2001, recv[149][149] is 1001
+timestep is 2, flag is 1, worker15_outside2:show recv, recv[0][0] is 1002, recv[50][50] is 2002, recv[149][149] is 1002
+timestep is 3, flag is 1, worker15_outside2:show recv, recv[0][0] is 1003, recv[50][50] is 2003, recv[149][149] is 1003
+timestep is 4, flag is 1, worker15_outside2:show recv, recv[0][0] is 1004, recv[50][50] is 2004, recv[149][149] is 1004
+timestep is 5, flag is 1, worker15_outside2:show recv, recv[0][0] is 1005, recv[50][50] is 2005, recv[149][149] is 1005
+timestep is 6, flag is 1, worker15_outside2:show recv, recv[0][0] is 1006, recv[50][50] is 2006, recv[149][149] is 1006
+timestep is 7, flag is 1, worker15_outside2:show recv, recv[0][0] is 1007, recv[50][50] is 2007, recv[149][149] is 1007
+timestep is 8, flag is 1, worker15_outside2:show recv, recv[0][0] is 1008, recv[50][50] is 2008, recv[149][149] is 1008
+timestep is 9, flag is 1, worker15_outside2:show recv, recv[0][0] is 1009, recv[50][50] is 2009, recv[149][149] is 1009
+timestep is 10, flag is 1, worker15_outside2:show recv, recv[0][0] is 1010, recv[50][50] is 2010, recv[149][149] is 1010
+timestep is 11, flag is 1, worker15_outside2:show recv, recv[0][0] is 1011, recv[50][50] is 2011, recv[149][149] is 1011
+timestep is 12, flag is 1, worker15_outside2:show recv, recv[0][0] is 1012, recv[50][50] is 2012, recv[149][149] is 1012
+timestep is 13, flag is 1, worker15_outside2:show recv, recv[0][0] is 1013, recv[50][50] is 2013, recv[149][149] is 1013
+timestep is 14, flag is 1, worker15_outside2:show recv, recv[0][0] is 1014, recv[50][50] is 2014, recv[149][149] is 1014
+timestep is 15, flag is 1, worker15_outside2:show recv, recv[0][0] is 1015, recv[50][50] is 2015, recv[149][149] is 1015
+timestep is 16, flag is 1, worker15_outside2:show recv, recv[0][0] is 1016, recv[50][50] is 2016, recv[149][149] is 1016
+timestep is 17, flag is 1, worker15_outside2:show recv, recv[0][0] is 1017, recv[50][50] is 2017, recv[149][149] is 1017
+timestep is 18, flag is 1, worker15_outside2:show recv, recv[0][0] is 1018, recv[50][50] is 2018, recv[149][149] is 1018
+timestep is 19, flag is 1, worker15_outside2:show recv, recv[0][0] is 1019, recv[50][50] is 2019, recv[149][149] is 1019
+timestep is 20, flag is 1, worker15_outside2:show recv, recv[0][0] is 1020, recv[50][50] is 2139, recv[149][149] is 1020
+timestep is 21, flag is 1, worker15_outside2:show recv, recv[0][0] is 1021, recv[50][50] is 2140, recv[149][149] is 1021
+timestep is 22, flag is 1, worker15_outside2:show recv, recv[0][0] is 1022, recv[50][50] is 2141, recv[149][149] is 1022
+timestep is 23, flag is 1, worker15_outside2:show recv, recv[0][0] is 1142, recv[50][50] is 2142, recv[149][149] is 1142
+timestep is 24, flag is 1, worker15_outside2:show recv, recv[0][0] is 1143, recv[50][50] is 2143, recv[149][149] is 1143
+timestep is 25, flag is 1, worker15_outside2:show recv, recv[0][0] is 1144, recv[50][50] is 2144, recv[149][149] is 1144
+timestep is 26, flag is 1, worker15_outside2:show recv, recv[0][0] is 1145, recv[50][50] is 2145, recv[149][149] is 1145
+timestep is 27, flag is 1, worker15_outside2:show recv, recv[0][0] is 1146, recv[50][50] is 2146, recv[149][149] is 1146
+timestep is 28, flag is 1, worker15_outside2:show recv, recv[0][0] is 1147, recv[50][50] is 2147, recv[149][149] is 1147
+timestep is 29, flag is 1, worker15_outside2:show recv, recv[0][0] is 1148, recv[50][50] is 2148, recv[149][149] is 1148
+timestep is 30, flag is 1, worker15_outside2:show recv, recv[0][0] is 1149, recv[50][50] is 2149, recv[149][149] is 1149
+timestep is 31, flag is 1, worker15_outside2:show recv, recv[0][0] is 1150, recv[50][50] is 2150, recv[149][149] is 1150
+timestep is 32, flag is 1, worker15_outside2:show recv, recv[0][0] is 1151, recv[50][50] is 2151, recv[149][149] is 1151
+timestepmy processor is vec0101, VH, my rank is 13
+new test:worker: program id is 0, my rank is 13
+v, recv[0][0] is 1030, recv[50][50] is 2030, recv[149][149] is 1030
+timestep is 31, flag is 0, countSDF32:worker11_outside1:show recv, recv[0][0] is 1031, recv[50][50] is 2031, recv[149][149] is 1031
+timestep is 32, flag is 0, countSDF33:worker11_outside1:show recv, recv[0][0] is 1032, recv[50][50] is 2032, recv[149][149] is 1032
+timestep is 33, flag is 0, countSDF34:worker11_outside1:show recv, recv[0][0] is 1033, recv[50][50] is 2033, recv[149][149] is 1033
+timestep is 34, flag is 0, countSDF35:worker11_outside1:show recv, recv[0][0] is 1034, recv[50][50] is 2034, recv[149][149] is 1034
+timestep is 35, flag is 0, countSDF36:worker11_outside1:show recv, recv[0][0] is 1035, recv[50][50] is 2035, recv[149][149] is 1035
+timestep is 36, flag is 0, countSDF37:worker11_outside1:show recv, recv[0][0] is 1036, recv[50][50] is 2036, recv[149][149] is 1036
+timestep is 37, flag is 0, countSDF38:worker11_outside1:show recv, recv[0][0] is 1037, recv[50][50] is 2037, recv[149][149] is 1037
+timestep is 38, flag is 0, countSDF39:worker11_outside1:show recv, recv[0][0] is 1038, recv[50][50] is 2038, recv[149][149] is 1038
+timestep is 39, flag is 0, countSDF40:worker11_outside1:show recv, recv[0][0] is 1039, recv[50][50] is 2039, recv[149][149] is 1039
+timestep is 40, flag is 0, countSDF41:worker11_outside1:show recv, recv[0][0] is 1040, recv[50][50] is 2040, recv[149][149] is 1040
+timestep is 41, flag is 0, countSDF42:worker11_outside1:show recv, recv[0][0] is 1041, recv[50][50] is 2041, recv[149][149] is 1041
+timestep is 42, flag is 0, countSDF43:worker11_outside1:show recv, recv[0][0] is 1042, recv[50][50] is 2042, recv[149][149] is 1042
+timestep is 43, flag is 0, countSDF44:worker11_outside1:show recv, recv[0][0] is 1043, recv[50][50] is 2043, recv[149][149] is 1043
+timestep is 44, flag is 0, countSDF45:worker11_outside1:show recv, recv[0][0] is 1044, recv[50][50] is 2044, recv[149][149] is 1044
+timestep is 45, flag is 0, countSDF46:worker11_outside1:show recv, recv[0][0] is 1045, recv[50][50] is 2045, recv[149][149] is 1045
+timestep is 46, flag is 0, countSDF47:worker11_outside1:show recv, recv[0][0] is 1046, recv[50][50] is 2046, recv[149][149] is 1046
+timestep is 47, flag is 0, countSDF48:worker11_outside1:show recv, recv[0][0] is 1047, recv[50][50] is 2047, recv[149][149] is 1047
+timestep is 48, flag is 0, countSDF49:worker11_outside1:show recv, recv[0][0] is 1048, recv[50][50] is 2048, recv[149][149] is 1048
+my processor is vec0101, VH, my rank is 12
+new test:worker: program id is 0, my rank is 12
+my processor is vec0101, VH, my rank is 10
+new test:worker: program id is 0, my rank is 10
+my_rank is 10, the residue is 48
+my_rank is 10, the residue is 109
+ is 33, flag is 1, worker15_outside2:show recv, recv[0][0] is 1152, recv[50][50] is 2152, recv[149][149] is 1152
+timestep is 34, flag is 1, worker15_outside2:show recv, recv[0][0] is 1153, recv[50][50] is 2153, recv[149][149] is 1153
+timestep is 35, flag is 1, worker15_outside2:show recv, recv[0][0] is 1154, recv[50][50] is 2154, recv[149][149] is 1154
+timestep is 36, flag is 1, worker15_outside2:show recv, recv[0][0] is 1155, recv[50][50] is 2155, recv[149][149] is 1155
+timestep is 37, flag is 1, worker15_outside2:show recv, recv[0][0] is 1156, recv[50][50] is 2156, recv[149][149] is 1156
+timestep is 38, flag is 1, worker15_outside2:show recv, recv[0][0] is 1157, recv[50][50] is 2157, recv[149][149] is 1157
+timestep is 39, flag is 1, worker15_outside2:show recv, recv[0][0] is 1158, recv[50][50] is 2158, recv[149][149] is 1158
+timestep is 40, flag is 1, worker15_outside2:show recv, recv[0][0] is 1159, recv[50][50] is 2159, recv[149][149] is 1159
+timestep is 41, flag is 1, worker15_outside2:show recv, recv[0][0] is 1160, recv[50][50] is 2160, recv[149][149] is 1160
+timestep is 42, flag is 1, worker15_outside2:show recv, recv[0][0] is 1161, recv[50][50] is 2161, recv[149][149] is 1161
+timestep is 43, flag is 1, worker15_outside2:show recv, recv[0][0] is 1162, recv[50][50] is 2162, recv[149][149] is 1162
+timestep is 44, flag is 1, worker15_outside2:show recv, recv[0][0] is 1163, recv[50][50] is 2163, recv[149][149] is 1163
+timestep is 45, flag is 1, worker15_outside2:show recv, recv[0][0] is 1164, recv[50][50] is 2164, recv[149][149] is 1164
+timestep is 46, flag is 1, worker15_outside2:show recv, recv[0][0] is 1165, recv[50][50] is 2165, recv[149][149] is 1165
+my processor is vec0101, ve id 0, my rank is 16
+new test:worker: program id is 1, my rank is 16
+signal 2
+my processor is vec0101, ve id 0, my rank is 14
+new test:worker: program id is 1, my rank is 14
+signal 2
+my_rank is 14, the residue is 46
+my_rank is 14, the residue is 118
+my processor is vec0101, ve id 0, my rank is 17
+new test:worker: program id is 1, my rank is 17
+signal 2
