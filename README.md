@@ -18,5 +18,5 @@ Developers of CoToCoA:
 - Keiichiro Fukazawa (Kyoto Univ., Japan)
 - Yohei Miyake (Kobe Univ., Japan)
 - Kazuya Nakazawa (Kobe Univ., Japan)
-- Jingde Zhow (Kyoto Univ., Japan)
+- Jingde Zhou (Kyoto Univ., Japan)
 - Youhei Sunada (Kobe Univ., Japan)
